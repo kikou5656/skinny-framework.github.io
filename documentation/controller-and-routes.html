@@ -151,7 +151,7 @@
 <p>There are the two controller base traits. SkinnyController is a WebApp (SkinnyMicroFilter). SkinnyServlet is a SingleApp (SkinnyMicroServlet).</p>
 
 <ul>
-<li><a href="https://oss.sonatype.org/service/local/repositories/releases/archive/org/skinny-framework/skinny-micro_2.11/1.0.5/skinny-micro_2.11-1.0.5-javadoc.jar/!/index.html#skinny.micro.package">Scala API docs for &ldquo;skinny-micro&rdquo;</a></li>
+<li><a href="https://oss.sonatype.org/service/local/repositories/releases/archive/org/skinny-framework/skinny-micro_2.11/1.0.6/skinny-micro_2.11-1.0.6-javadoc.jar/!/index.html#skinny.micro.package">Scala API docs for &ldquo;skinny-micro&rdquo;</a></li>
 </ul>
 
 <p>In general SkinnyController is more suitable for Skinny framework based applications.</p>
@@ -327,7 +327,7 @@ If you&rsquo;d like to customize routings (e.g. use only creation and deletion),
 
 <p><a href="https://github.com/skinny-framework/skinny-framework/blob/master/framework/src/main/scala/skinny/controller/feature/BeforeAfterActionFeature.scala">/framework/src/main/scala/skinny/controller/feature/BeforeAfterActionFeature.scala</a></p>
 
-<p>See also: <a href="https://oss.sonatype.org/service/local/repositories/releases/archive/org/skinny-framework/skinny-micro_2.11/1.0.5/skinny-micro_2.11-1.0.5-javadoc.jar/!/index.html#skinny.micro.base.BeforeAfterDsl">Scala API docs for &ldquo;skinny.micro.base.BeforeAfterDsl&rdquo;</a></p>
+<p>See also: <a href="https://oss.sonatype.org/service/local/repositories/releases/archive/org/skinny-framework/skinny-micro_2.11/1.0.6/skinny-micro_2.11-1.0.6-javadoc.jar/!/index.html#skinny.micro.base.BeforeAfterDsl">Scala API docs for &ldquo;skinny.micro.base.BeforeAfterDsl&rdquo;</a></p>
 <pre class="highlight scala"><code><span class="k">class</span> <span class="nc">MembersController</span> <span class="k">extends</span> <span class="nc">SkinnyController</span> <span class="k">with</span> <span class="nc">Routes</span> <span class="o">{</span>
 
   <span class="c1">// Skinny Micro filters
@@ -359,7 +359,7 @@ If you&rsquo;d like to customize routings (e.g. use only creation and deletion),
 
 <p>TODO: implementation</p>
 
-<p>See also: <a href="https://oss.sonatype.org/service/local/repositories/releases/archive/org/skinny-framework/skinny-micro_2.11/1.0.5/skinny-micro_2.11-1.0.5-javadoc.jar/!/index.html#skinny.micro.async.AsyncBeforeAfterDsl">Scala API docs for &ldquo;skinny.micro.async.AsyncBeforeAfterDsl&rdquo;</a></p>
+<p>See also: <a href="https://oss.sonatype.org/service/local/repositories/releases/archive/org/skinny-framework/skinny-micro_2.11/1.0.6/skinny-micro_2.11-1.0.6-javadoc.jar/!/index.html#skinny.micro.async.AsyncBeforeAfterDsl">Scala API docs for &ldquo;skinny.micro.async.AsyncBeforeAfterDsl&rdquo;</a></p>
 <pre class="highlight scala"><code><span class="k">class</span> <span class="nc">MembersController</span> <span class="k">extends</span> <span class="nc">AsyncSkinnyController</span> <span class="k">with</span> <span class="nc">Routes</span> <span class="o">{</span>
 
   <span class="c1">// Skinny Micro filters
@@ -402,8 +402,11 @@ If you&rsquo;d like to customize routings (e.g. use only creation and deletion),
 <span class="o">}</span>
 </code></pre>
 
-<p>ErrorPageFilter is as follows. It&rsquo;s pretty easy to customize such a filter (e.g. adding error notification) as follows.</p>
-<pre class="highlight scala"><code><span class="k">trait</span> <span class="nc">ErrorPageFilter</span> <span class="k">extends</span> <span class="nc">SkinnyRenderingFilter</span> <span class="o">{</span>
+<p>ErrorPageFilter is as follows. It&rsquo;s pretty easy to customize such a filter (e.g. adding error notification) as follows. If you need to access SkinnyMicroContext in filters, mix in MainThreadLocalEverywhere too.</p>
+<pre class="highlight scala"><code><span class="k">import</span> <span class="nn">skinny.filter.SkinnyRenderingFilter</span>
+<span class="k">import</span> <span class="nn">skinny.micro.base.MainThreadLocalEverywhere</span>
+
+<span class="k">trait</span> <span class="nc">ErrorPageFilter</span> <span class="k">extends</span> <span class="nc">SkinnyRenderingFilter</span> <span class="k">with</span> <span class="nc">MainThreadLocalEverywhere</span> <span class="o">{</span>
   <span class="c1">// appends error filter in order
 </span>  <span class="n">addRenderingErrorFilter</span> <span class="o">{</span>
     <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">Throwable</span> <span class="o">=&gt;</span>
@@ -518,7 +521,7 @@ If you&rsquo;d like to customize routings (e.g. use only creation and deletion),
   <span class="k">def</span> <span class="n">index</span> <span class="k">=</span> <span class="o">{</span>
     <span class="k">val</span> <span class="n">v</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">Any</span><span class="o">]</span> <span class="k">=</span> <span class="n">skinnySession</span><span class="o">.</span><span class="n">getAttribute</span><span class="o">(</span><span class="s">"name"</span><span class="o">)</span>
     <span class="n">skinnySession</span><span class="o">.</span><span class="n">setAttribute</span><span class="o">(</span><span class="s">"name"</span><span class="o">,</span> <span class="s">"value"</span><span class="o">)</span>
-    <span class="n">skinnySession</span><span class="o">.</span><span class="n">deleteAttribute</span><span class="o">(</span><span class="s">"name"</span><span class="o">)</span>
+    <span class="n">skinnySession</span><span class="o">.</span><span class="n">removeAttribute</span><span class="o">(</span><span class="s">"name"</span><span class="o">)</span>
   <span class="o">}</span>
 <span class="o">}</span>
 </code></pre>
