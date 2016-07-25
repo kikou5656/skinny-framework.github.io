@@ -69,6 +69,53 @@
 
 <hr/>
 
+<h3 id="2-2-migration-guide-for-2-1-x-users">2.2 Migration Guide for 2.1.x USers</h3>
+
+<hr/>
+
+<p><a href="https://github.com/skinny-framework/skinny-framework/releases/tag/2.2.0">https://github.com/skinny-framework/skinny-framework/releases/tag/2.2.0</a></p>
+
+<hr/>
+
+<h4 id="sbt-0-13-12">sbt 0.13.12</h4>
+
+<p>Skinny 2.2.0&rsquo;s blank project use <code>build.sbt</code> instead of <code>project/Build.scala</code> because since 0.13.12, sbt marks the Build trait deprecated and will remove it since version 1.0.</p>
+
+<p><a href="https://github.com/sbt/sbt/pull/2530">https://github.com/sbt/sbt/pull/2530</a></p>
+
+<p>The migration from your existing <code>project/Build.scala</code> to <code>build.sbt</code> is not difficult. But if you&rsquo;re stuck with it, check the default settings in skinny-blank-app.</p>
+
+<h6 id="remove-the-build-object">Remove the build object</h6>
+
+<p>In <code>build.sbt</code>, you don&rsquo;t need a parent object which extends Build trait. Just remove it.</p>
+<pre class="highlight scala"><code><span class="k">object</span> <span class="nc">SkinnyAppBuild</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
+<span class="o">}</span>
+</code></pre>
+
+<h6 id="migrate-project-definition-dsl">Migrate project definition DSL</h6>
+
+<p>In <code>build.sbt</code>, the DSL to define projects is different from <code>project/Build.scala</code>. Migrate <code>Project(...)</code></p>
+<pre class="highlight scala"><code>  <span class="k">lazy</span> <span class="k">val</span> <span class="n">dev</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="n">id</span> <span class="k">=</span> <span class="s">"dev"</span><span class="o">,</span> <span class="n">base</span> <span class="k">=</span> <span class="n">file</span><span class="o">(</span><span class="s">"."</span><span class="o">),</span>
+    <span class="n">settings</span> <span class="k">=</span> <span class="n">devBaseSettings</span> <span class="o">++</span> <span class="nc">Seq</span><span class="o">(</span>
+      <span class="n">name</span> <span class="o">:=</span> <span class="n">appName</span> <span class="o">+</span> <span class="s">"-dev"</span><span class="o">,</span>
+      <span class="n">target</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">"target"</span> <span class="o">/</span> <span class="s">"dev"</span>
+    <span class="o">)</span>
+  <span class="o">)</span>
+</code></pre>
+
+<p>to <code>(project in file(dir)).settings(...)</code> like this:</p>
+<pre class="highlight scala"><code><span class="k">lazy</span> <span class="k">val</span> <span class="n">dev</span> <span class="k">=</span> <span class="o">(</span><span class="n">project</span> <span class="n">in</span> <span class="n">file</span><span class="o">(</span><span class="s">"."</span><span class="o">)).</span><span class="n">settings</span><span class="o">(</span><span class="n">devBaseSettings</span><span class="o">).</span><span class="n">settings</span><span class="o">(</span>
+  <span class="n">name</span> <span class="o">:=</span> <span class="n">appName</span> <span class="o">+</span> <span class="s">"-dev"</span><span class="o">,</span>
+  <span class="n">target</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">"target"</span> <span class="o">/</span> <span class="s">"dev"</span>
+<span class="o">)</span>
+</code></pre>
+
+<h5 id="limitation">Limitation</h5>
+
+<p>Unfortunately, <code>build.sbt</code> doesn&rsquo;t allow defining multiple sub projects which share the same base directory. Due to the limitation, the precompileDev project is disabled by default since 2.2.0. If you prefer using precompileDev project, modify <code>build.sbt</code> after creating a skinny project.</p>
+
+<hr/>
+
 <h3 id="2-1-migration-guide-for-2-0-x-users">2.1 Migration Guide for 2.0.x Users</h3>
 
 <hr/>
