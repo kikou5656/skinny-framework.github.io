@@ -124,13 +124,13 @@ If you&rsquo;re already familiar with Scala and your <code>sbt.ivy.home</code> d
 
 <p>For beginners, this one is highly recommended because you don&rsquo;t need to wait download dependencies.</p>
 
-<p><a href="https://github.com/skinny-framework/skinny-framework/releases/download/2.3.6/skinny-blank-app-with-deps.zip"><img alt="Download" src="/images/blank-app-with-deps-download.png" /></a></p>
+<p><a href="https://github.com/skinny-framework/skinny-framework/releases/download/2.3.7/skinny-blank-app-with-deps.zip"><img alt="Download" src="/images/blank-app-with-deps-download.png" /></a></p>
 
 <h4 id="2-skinny-blank-app-zip-1mb">2) skinny-blank-app.zip (1MB)</h4>
 
 <p>If you&rsquo;re a heavy Scala user, this one will be suitable for you.</p>
 
-<p><a href="https://github.com/skinny-framework/skinny-framework/releases/download/2.3.6/skinny-blank-app.zip"><img alt="Download" src="/images/blank-app-download.png" /></a></p>
+<p><a href="https://github.com/skinny-framework/skinny-framework/releases/download/2.3.7/skinny-blank-app.zip"><img alt="Download" src="/images/blank-app-download.png" /></a></p>
 
 <h4 id="3-homebrew">3) Homebrew</h4>
 
@@ -196,8 +196,8 @@ skinny run
 <p>In the aspect of Web application framework, Skinny Framework&rsquo;s core part is an independent and useful micro framework named <a href="/documentation/micro.html">Skinny Micro</a>. The following code shows you how to run Skinny Micro application right now by using <a href="http://www.scala-sbt.org/0.13/docs/Scripts.html">sbt Script runnner</a>.</p>
 <pre class="highlight scala"><code><span class="o">#!/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">env</span> <span class="n">scalas</span>
 <span class="cm">/***
-scalaVersion := "2.12.1"
-libraryDependencies += "org.skinny-framework" %% "skinny-micro-server" % "1.2.5"
+scalaVersion := "2.12.2"
+libraryDependencies += "org.skinny-framework" %% "skinny-micro-server" % "1.2.6"
 */</span>
 <span class="k">import</span> <span class="nn">skinny.micro._</span>
 <span class="k">object</span> <span class="nc">HelloApp</span> <span class="k">extends</span> <span class="nc">WebApp</span> <span class="o">{</span>
@@ -406,9 +406,9 @@ libraryDependencies += "org.skinny-framework" %% "skinny-micro-server" % "1.2.5"
 
 <p>First, add <code>skinny-assets</code> to libraryDependencies.</p>
 <pre class="highlight plaintext"><code>libraryDependencies ++= Seq(
-  "org.skinny-framework" %% "skinny-framework" % "2.3.6",
-  "org.skinny-framework" %% "skinny-assets"    % "2.3.6",
-  "org.skinny-framework" %% "skinny-test"      % "2.3.6" % "test"
+  "org.skinny-framework" %% "skinny-framework" % "2.3.7",
+  "org.skinny-framework" %% "skinny-assets"    % "2.3.7",
+  "org.skinny-framework" %% "skinny-test"      % "2.3.7" % "test"
 )
 </code></pre>
 
